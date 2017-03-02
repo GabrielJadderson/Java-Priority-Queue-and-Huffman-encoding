@@ -54,6 +54,7 @@ public class tempClass
 
     /**
      * swaps/replaces/exchanges a with b given their indices as input.
+     * TODO: use collections for more speed
      *
      * @param list a list containing integers
      * @param a    the index of the element to be swapped
@@ -61,10 +62,10 @@ public class tempClass
      */
     public void swap(int[] list, int a, int b)
     {
-        int valA = list[a];
-        int valB = list[b];
-        list[a] = valB;
-        list[b] = valA;
+        int da = list[a];
+        int db = list[b];
+        list[a] = db;
+        list[b] = da;
     }
 
 }
