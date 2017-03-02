@@ -3,8 +3,12 @@
  */
 public class PQHeap implements PQ
 {
-    public PQHeap(int n) {
+    Element[] data;
 
+    public PQHeap(int n)
+    {
+        data = new Element[n];
+        data[0] = null;
     }
 
     @Override
@@ -18,4 +22,11 @@ public class PQHeap implements PQ
     {
 
     }
+
+    public void MaxHeapify(Element[] A, int i)
+    {
+
+    }
+
+
 }
