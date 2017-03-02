@@ -4,6 +4,13 @@
 public class tempClass
 {
 
+    int heapSize = 0;
+
+    public tempClass(int arraySize)
+    {
+        this.heapSize = arraySize - 1; //because index 0 is never used and is not part of the heap.
+    }
+
     /**
      * not tested yet
      *
@@ -15,41 +22,38 @@ public class tempClass
         int l = left(i);
         int r = right(i);
         int largest = 0;
-        if (l <= A.length && A[l] > A[i])
+        if (l <= heapSize && A[l] > A[i])
             largest = l;
         else
-            largest = r;
+            largest = i;
 
-        if (r <= A.length && A[r] > A[largest])
+        if (r <= heapSize && A[r] > A[largest])
             largest = r;
 
 
         if (largest != i)
         {
-            try
-            {
-                swap(A, i, largest);
-                max_heapify(A, largest);
-            } catch (ArrayIndexOutOfBoundsException e)
-            {
-                return;
-            }
+            swap(A, i, largest);
+            max_heapify(A, largest);
         }
     }
 
     public int parent(int i)
     {
-        return (int) Math.floor(i / 2);
+        return i >> 0x01; //fast
+        //return (int) Math.floor(i / 2);
     }
 
     public int left(int i)
     {
-        return 2 * i;
+        return i << 0x01; //faster!!
+        //return 2 * i;
     }
 
     public int right(int i)
     {
-        return 2 * i + 1;
+        return i << 0x01 ^ 0x01; //fastest ultra speed over 9000
+        //return 2 * i + 1;
     }
 
     /**

@@ -42,12 +42,26 @@ public class Heapsort
             System.out.println("random: " + AA[i] + " index: " + i);
         }
 
-        new tempClass().max_heapify(AA, 1);
+        for (int i = AA.length / 2; i >= 1; i--)
+        {
+            System.out.println("v: " + i);
+            new tempClass(AA.length).max_heapify(AA, i);
+        }
+
 
         for (int i = 1; i < AA.length; i++)
         {
             System.out.println(AA[i] + " index: " + i);
         }
+
+        System.out.print("generated output: ");
+        for (int i = 1; i < AA.length; i++)
+        {
+            System.out.print(AA[i] + " ");
+        }
+
+
+        System.out.println("\nexpected output: 25, 10, 14, 1, 3");
     }
 
     public static void test_2()
@@ -60,7 +74,6 @@ public class Heapsort
         pq.insert(new Element(3, null));
         pq.insert(new Element(25, null));
         pq.insert(new Element(100, null));
-
 
         System.out.println(pq.extractMin().key);
 
