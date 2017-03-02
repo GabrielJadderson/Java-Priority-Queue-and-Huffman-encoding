@@ -33,7 +33,7 @@ public class tempClass
 
         if (largest != i)
         {
-            swap(A, i, largest);
+            exchange(A, i, largest);
             max_heapify(A, largest);
         }
     }
@@ -64,7 +64,7 @@ public class tempClass
      * @param a    the index of the element to be swapped
      * @param b    the index of the element to be swapped
      */
-    public void swap(int[] list, int a, int b)
+    public void exchange(int[] list, int a, int b)
     {
         int da = list[a];
         int db = list[b];

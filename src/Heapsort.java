@@ -44,7 +44,7 @@ public class Heapsort
 
         for (int i = AA.length / 2; i >= 1; i--)
         {
-            System.out.println("v: " + i);
+            System.out.println("Max_Heapify iterations: " + i);
             new tempClass(AA.length).max_heapify(AA, i);
         }
 
