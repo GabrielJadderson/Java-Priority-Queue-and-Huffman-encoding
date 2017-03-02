@@ -42,7 +42,7 @@ public class Heapsort
             System.out.println("random: " + AA[i] + " index: " + i);
         }
 
-        new tempClass().max_heapify(AA, 1);
+        new tempClass(5).max_heapify(AA, 1);
 
         for (int i = 1; i < AA.length; i++)
         {

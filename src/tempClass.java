@@ -4,6 +4,13 @@
 public class tempClass
 {
 
+    int heapSize = 0;
+
+    public tempClass(int heapSize)
+    {
+        this.heapSize = heapSize;
+    }
+
     /**
      * not tested yet
      *
@@ -39,17 +46,20 @@ public class tempClass
 
     public int parent(int i)
     {
-        return (int) Math.floor(i / 2);
+        return i >> 0x01; //fast
+        //return (int) Math.floor(i / 2);
     }
 
     public int left(int i)
     {
-        return 2 * i;
+        return i << 0x01; //faster!!
+        //return 2 * i;
     }
 
     public int right(int i)
     {
-        return 2 * i + 1;
+        return i << 0x01 ^ 0x01; //fastest ultra speed over 9000
+        //return 2 * i + 1;
     }
 
     /**
