@@ -3,21 +3,13 @@
  */
 public class tempClass
 {
-
-    int heapSize = 0;
-
-    public tempClass(int arraySize)
-    {
-        this.heapSize = arraySize - 1; //because index 0 is never used and is not part of the heap.
-    }
-
     /**
      * not tested yet
      *
      * @param A
      * @param i
      */
-    public void max_heapify(int[] A, int i)
+    public void max_heapify(int[] A, int i, int heapSize)
     {
         int l = left(i);
         int r = right(i);
@@ -34,7 +26,7 @@ public class tempClass
         if (largest != i)
         {
             exchange(A, i, largest);
-            max_heapify(A, largest);
+            max_heapify(A, largest, heapSize);
         }
     }
 

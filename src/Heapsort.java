@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Created by gabriel on 01/03/2017.
  */
@@ -5,7 +7,7 @@ public class Heapsort
 {
     public static void main(String[] args)
     {
-        /*
+
         PQ pq = new PQHeap(1000);
 
         int n = 0;
@@ -24,23 +26,18 @@ public class Heapsort
             System.out.println(pq.extractMin().key);
             n--;
         }
-        */
 
-        test_1();
+
+        //test_1();
         //test_2();
+        //test_3();
     }
 
-    public static void test_1()
+    /*public static void test_1()
     {
         int[] AA = new int[10];
 
         AA = new int[]{0, 10, 1, 14, 25, 3};
-
-        for (int i = 1; i < AA.length; i++)
-        {
-            // AA[i] = new Random().nextInt(10);
-            System.out.println("random: " + AA[i] + " index: " + i);
-        }
 
         for (int i = AA.length / 2; i >= 1; i--)
         {
@@ -62,7 +59,7 @@ public class Heapsort
 
 
         System.out.println("\nexpected output: 25, 10, 14, 1, 3");
-    }
+    }*/
 
     public static void test_2()
     {
@@ -77,6 +74,40 @@ public class Heapsort
 
         System.out.println(pq.extractMin().key);
 
+    }
+
+    public static void test_3()
+    {
+        PQHeap pq = new PQHeap(50);
+
+        pq.insert(new Element(42, null));
+        pq.insert(new Element(55, null));
+        pq.insert(new Element(3, null));
+        pq.insert(new Element(1111, null));
+        pq.insert(new Element(25, null));
+        pq.insert(new Element(100, null));
+        pq.insert(new Element(1111, null));
+        pq.insert(new Element(101, null));
+        pq.insert(new Element(171, null));
+        pq.insert(new Element(1111, null));
+
+        for (Element p : pq.data)
+        {
+            if (p != null)
+            {
+                System.out.println(p.key);
+                //System.out.println(pq.dataCount);
+            }
+        }
+
+        System.out.println("-----");
+
+        Element e = pq.extractMin();
+        while (e != null)
+        {
+            System.out.println(e.key);
+            e = pq.extractMin();
+        }
     }
 
 }
