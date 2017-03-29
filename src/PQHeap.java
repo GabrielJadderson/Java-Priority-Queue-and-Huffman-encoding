@@ -1,5 +1,6 @@
 /**
  * Created by Gabriel Jadderson(gajad16) Patrick Jakobsen(pajak16) on 01/03/2017.
+ *
  * @author gajad16, pajak16
  */
 public class PQHeap implements PQ
@@ -43,6 +44,7 @@ public class PQHeap implements PQ
         //Restore the heap order.
         MinHeapify(1);
 
+
         //Return the reference to the requested data.
         return e;
     }
@@ -66,10 +68,17 @@ public class PQHeap implements PQ
             //Construct heap order.
             //This is a stupid waste of processing power, but it works.
             //Implementing a bubble-up algorithm would be more efficient.
-            for (int i = data.length / 2; i >= 1; i--)
+            /*for (int i = data.length / 2; i >= 1; i--)
             {
                 MinHeapify(i);
+            }*/
+            int i = dataCount; //Location of new element.
+            while (i > 1 && data[parent(i)].key > data[i].key)
+            {
+                exchange(parent(i), i);
+                i = parent(i);
             }
+
         }
     }
 
@@ -148,7 +157,7 @@ public class PQHeap implements PQ
         //This bit-shift is equivalent to multiplying with 2.
         //All the bits have a value, and by moving them left that value is doubled for each, doubling the total value.
         //If the leftmost bit is 1, then it overflows and something will probably break. A heap of that size is not expected.
-        return i << 0x01;
+        return i << 0x01; //
     }
 
     /**
