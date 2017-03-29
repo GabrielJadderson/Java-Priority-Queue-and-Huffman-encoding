@@ -66,10 +66,17 @@ public class PQHeap implements PQ
             //Construct heap order.
             //This is a stupid waste of processing power, but it works.
             //Implementing a bubble-up algorithm would be more efficient.
-            for (int i = data.length / 2; i >= 1; i--)
+            /*for (int i = data.length / 2; i >= 1; i--)
             {
                 MinHeapify(i);
+            }*/
+            int i = dataCount; //Location of new element.
+            while (i > 1 && data[parent(i)] < data[i])
+            {
+                exchange(data[parent(i)], data[i]);
+                i = parent(i);
             }
+
         }
     }
 
