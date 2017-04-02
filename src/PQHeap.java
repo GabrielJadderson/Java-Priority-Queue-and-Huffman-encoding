@@ -63,13 +63,7 @@ public class PQHeap implements PQ
             dataCount++;
             data[dataCount] = e;
 
-            //Construct heap order.
-            //This is a stupid waste of processing power, but it works.
-            //Implementing a bubble-up algorithm would be more efficient.
-            /*for (int i = data.length / 2; i >= 1; i--)
-            {
-                MinHeapify(i);
-            }*/
+            //Rebuild the heap order.
             int i = dataCount; //Location of new element.
             while (i > 1 && data[parent(i)] < data[i])
             {
@@ -130,7 +124,8 @@ public class PQHeap implements PQ
     /**
      * Takes in an Integer <b><i>i</i></b> and determines the parent {@link Element} to the given index <b><i>i</i></b>.
      * Performs a bit-shift to the right, which is equivalent to integer division with 2.
-     *
+     * The course book claims that this is slightly faster than arithmetic operations.
+     * 
      * @param i index
      * @return <b>\u230Ai/2\u230B</b> or the parent Element to the given index <b><i>i</i></b>.
      */
@@ -146,6 +141,7 @@ public class PQHeap implements PQ
     /**
      * Takes in an Integer <b><i>i</i></b> and determines the left {@link Element} to the given index <b><i>i</i></b>.
      * Performs a bit-shift to the left, which is equivalent to multiplying with 2.
+     * The course book claims that this is slightly faster than arithmetic operations.
      *
      * @param i index
      * @return <b>2*i</b> or the Element to the left of the given index <b><i>i</i></b>.
@@ -161,6 +157,7 @@ public class PQHeap implements PQ
     /**
      * Takes in an Integer <b><i>i</i></b> and determines the right {@link Element} to the given index <b><i>i</i></b>.
      * Performs a bit-shift to the left and performing xor on 1, which is equivalent to multiplying with 2 and adding 1.
+     * The course book claims that this is slightly faster than arithmetic operations.
      *
      * @param i index
      * @return <b>2*i+1</b> or the Element to the right of the given index <b><i>i</i></b>.
