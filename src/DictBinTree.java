@@ -67,8 +67,10 @@ public class DictBinTree implements Dict
         int[] result = new int[treeSize];
 
         //The function that is used to traverse the tree recursively.
-        treewalk(root, result);
-
+        if(root != null)
+        {
+          treewalk(root, result);
+        }
         //Returns the resulting int[] with the keys.
         return result;
     }
