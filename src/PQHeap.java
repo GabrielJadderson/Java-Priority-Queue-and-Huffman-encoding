@@ -153,7 +153,9 @@ public class PQHeap implements PQ
         //This bit-shift is equivalent to multiplying with 2.
         //All the bits have a value, and by moving them left that value is doubled for each, doubling the total value.
         //If the leftmost bit is 1, then it overflows and something will probably break. A heap of that size is not expected.
-        return i << 0x01; //
+        //The use of bitshifts yields a better running time according to the
+        //book on page 152: "On most computers, LEFT procedure can compute 2i in one instruction by simply shifting the binary representation of i left by one bit position.
+        return i << 0x01;
     }
 
     /**
