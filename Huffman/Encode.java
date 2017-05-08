@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff
+
 /**
  * Created by Gabriel Jadderson on 17/04/2017.
  */
@@ -40,7 +42,7 @@ public class Encode
             int x = bufferedInputStream.read();
             while (x != -1 && x < 255)
             {
-                //System.out.println(x);
+                System.out.println(x);
                 frequency[x]++;
 
                 x = bufferedInputStream.read();
@@ -62,14 +64,14 @@ public class Encode
         //StringBuilder stringBuilder = new StringBuilder();
 
         huffTraverse(HuffTree, "");
-        for (int i = 0; i < codes.length; i++)
+        /*for (int i = 0; i < codes.length; i++)
         {
             String s = codes[i];
             if (!(s == null))
             {
                 System.out.println("_Code for " + i + ": " + s);
             }
-        }
+        }*/
 
 
         //NOW SAVE SHIT :D
@@ -87,14 +89,18 @@ public class Encode
             // byte in -> codeword out
             for(int i = bufferedInputStream.read(); i != -1; i = bufferedInputStream.read()) {
                 String s = codes[i];
+                System.out.print("Writing code: " + s + ": ");
 
                 for (char c : s.toCharArray()) {
                     if (c == '0') {
                         bitOutputStream.writeBit(0);
+                        System.out.print(left);
                     } else if (c == '1') {
                         bitOutputStream.writeBit(1);
+                        System.out.print(right);
                     }
                 }
+                System.out.print("\n");
             }
 
             bitOutputStream.close();
@@ -103,10 +109,6 @@ public class Encode
         {
             e.printStackTrace();
         }
-
-
-
-
     }
 
     public static void huffTraverse(Tree t, String s)
@@ -116,7 +118,7 @@ public class Encode
             if (t.character != -1)
             {
                 codes[t.character] = s;
-                System.out.println("Code for " + t.character + " is: " + s + "  .");
+                //System.out.println("Code for " + t.character + " is: " + s + "  .");
             }
 
             huffTraverse(t.left, s + left);
@@ -124,21 +126,6 @@ public class Encode
         }
     }
 
-
-
-    public static class Tree
-    {
-        Tree right;
-        Tree left;
-        int character;
-
-        public Tree(Tree left, Tree right, int character)
-        {
-            this.left = left;
-            this.right = right;
-            this.character = character;
-        }
-    }
 
     public static Tree Huffman()
     {
