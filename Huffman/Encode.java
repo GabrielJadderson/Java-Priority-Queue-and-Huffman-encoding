@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 /**
  * Created by Gabriel Jadderson on 17/04/2017.
@@ -11,6 +14,8 @@ public class Encode
     static PQHeap pqHeap;
     static final String left = "0";
     static final String right = "1";
+    static String inputFile = "";
+    static String outputFile = "";
 
     public Encode()
     {
@@ -23,11 +28,14 @@ public class Encode
 
     public static void main(String[] args)
     {
+        inputFile = args[0];
+        outputFile = args[1];
+
 
         new Encode();
 
 
-        try (FileInputStream fileInputStream = new FileInputStream(new File("in.txt")); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
+        try (FileInputStream fileInputStream = new FileInputStream(new File(inputFile)); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
         {
             int x = bufferedInputStream.read();
             while (x != -1 && x < 255)
@@ -67,16 +75,36 @@ public class Encode
         //NOW SAVE SHIT :D
         try
         {
-            BitOutputStream bitOutputStream = new BitOutputStream(new FileOutputStream(new File("COMPRESSEDOUT.txt")));
+            BitOutputStream bitOutputStream = new BitOutputStream(new FileOutputStream(new File(outputFile)));
+            FileInputStream fileInputStream = new FileInputStream(new File(inputFile));
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 
             for (int i = 0; i < frequency.length; i++)
             {
                 bitOutputStream.writeInt(frequency[i]);
             }
+
+            // byte in -> codeword out
+            for(int i = bufferedInputStream.read(); i != -1; i = bufferedInputStream.read()) {
+                String s = codes[i];
+
+                for (char c : s.toCharArray()) {
+                    if (c == '0') {
+                        bitOutputStream.writeBit(0);
+                    } else if (c == '1') {
+                        bitOutputStream.writeBit(1);
+                    }
+                }
+            }
+
+            bitOutputStream.close();
+            bufferedInputStream.close();
         } catch (Exception e)
         {
             e.printStackTrace();
         }
+
+
 
 
     }
@@ -96,36 +124,6 @@ public class Encode
         }
     }
 
-    /*public static void huffTraverse(Object t, String s)
-    {
-        StringBuilder sb = new StringBuilder();
-        sb.append(s);
-
-        if (!(t instanceof Tree))
-        {
-            sb.append(right);
-            Element e = (Element) t;
-            codes[(int) e.data] = sb.toString();
-            return;
-        }
-
-        Tree current = (Tree) t;
-
-        huffTraverse(current.right, sb.toString());
-
-        sb.append(left);
-
-        if (current.data instanceof Tree)
-        {
-            huffTraverse(current.data, sb.toString());
-        } else
-        {
-            Element e = (Element) current.data;
-            codes[(int) e.data] = sb.toString();
-        }
-
-
-    }   */
 
 
     public static class Tree
@@ -151,15 +149,7 @@ public class Encode
             Element left = pqHeap.extractMin();
             Element right = pqHeap.extractMin();
 
-            //Tree t = new Tree(left.key + right.key, left, right);
-            //System.out.println(left.key + right.key);
-
-            //System.out.println((int)left.data + " has been paired with " + (int)right.data);
-
-            //pqHeap.insert(t);
-
             pqHeap.insert(new Element(left.key + right.key, new Tree((Tree) left.data, (Tree) right.data, -1)));
-
         }
 
         return (Tree) pqHeap.extractMin().data;
