@@ -1,52 +1,67 @@
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 /**
  * Created by Gabriel Jadderson on 08/05/2017.
  */
-public class Decode
+public class Decode extends Encode
 {
-    static int[] frequency;
-    static String[] codes;
-    static PQHeap pqHeap;
-    static String inputFile = "";
-    static String outputFile = "";
+    static int sum;
 
     public Decode()
     {
-        frequency = new int[256];
-        codes = new String[256];
-        pqHeap = new PQHeap(256);
+        super();
+        sum = 0;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         inputFile = args[0];
         outputFile = args[1];
 
         new Decode();
 
-        try (FileInputStream fileInputStream = new FileInputStream(new File(inputFile)); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
+        try
         {
-            for(int i = 0; i < frequency.length; i++) {
-                frequency[i] = bufferedInputStream.read();
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(outputFile));
+            FileInputStream fileInputStream = new FileInputStream(new File(inputFile));
+
+            BitInputStream bitInputStream = new BitInputStream(fileInputStream);
+
+            for (int i = 0; i < frequency.length; i++)
+            {
+                int freq = bitInputStream.readInt();
+                pqHeap.insert(new Element(freq, new Tree(null, null, i)));
+                sum += freq;
             }
 
-            /*int x = bufferedInputStream.read();
-            while (x != -1 && x < 255)
-            {
-                //System.out.println(x);
-                frequency[x]++;
+            Tree huffTree = Huffman();
 
-                x = bufferedInputStream.read();
-            }*/
+            int charactersWritten = 0;
+            while (charactersWritten < sum)
+            {
+
+                int val = huffTree.getCharacter(bitInputStream);
+                if (val == -1) break;
+                charactersWritten++;
+
+                System.out.println(val);
+                fileOutputStream.write(val);
+
+            }
+
+
+            fileInputStream.close();
+            bitInputStream.close();
         } catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        for(int i = 0; i < frequency.length; i++) {
-            System.out.println(frequency[i]);
+        for (int i = 0; i < frequency.length; i++)
+        {
+            //System.out.println(frequency[i]);
         }
 
     }
