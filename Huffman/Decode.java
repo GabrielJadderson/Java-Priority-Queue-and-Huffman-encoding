@@ -7,12 +7,12 @@ import java.io.FileOutputStream;
  */
 public class Decode extends Encode
 {
-    static int sum;
+    //static int sum;
 
     public Decode()
     {
         super();
-        sum = 0;
+        //sum = 0;
     }
 
     public static void main(String[] args)
@@ -31,15 +31,15 @@ public class Decode extends Encode
 
             for (int i = 0; i < frequency.length; i++)
             {
-                int freq = bitInputStream.readInt();
-                pqHeap.insert(new Element(freq, new Tree(null, null, i)));
-                sum += freq;
+                //int freq = bitInputStream.readInt();
+                pqHeap.insert(new Element(bitInputStream.readInt(), new Tree(null, null, i)));
+                //sum += freq;
             }
 
             Tree huffTree = Huffman();
 
             int charactersWritten = 0;
-            while (charactersWritten < sum)
+            while (true)
             {
 
                 int val = huffTree.getCharacter(bitInputStream);
