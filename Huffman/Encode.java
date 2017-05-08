@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import java.util.stream.IntStream;
+
 /**
  *
  * Created by Gabriel Jadderson on 17/04/2017.
@@ -30,9 +32,9 @@ public class Encode
         try (FileInputStream fileInputStream = new FileInputStream(new File(args[0])); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
         {
             int x = bufferedInputStream.read();
-            while (x != -1 && x < 255)
+            while (x != -1)
             {
-                System.out.println(x);
+                //System.out.println(x);
                 frequency[x]++;
 
                 x = bufferedInputStream.read();
@@ -74,23 +76,24 @@ public class Encode
             for (int i = 0; i < frequency.length; i++)
             {
                 bitOutputStream.writeInt(frequency[i]);
+                //System.out.println(frequency[i]);
             }
 
             // byte in -> codeword out
             for(int i = bufferedInputStream.read(); i != -1; i = bufferedInputStream.read()) {
                 String s = codes[i];
-                System.out.print("Writing code: " + s + ": ");
+                //System.out.print("Writing code: " + s + ": ");
 
                 for (char c : s.toCharArray()) {
                     if (c == '0') {
                         bitOutputStream.writeBit(0);
-                        System.out.print(left);
+                        //System.out.print(left);
                     } else if (c == '1') {
                         bitOutputStream.writeBit(1);
-                        System.out.print(right);
+                        //System.out.print(right);
                     }
                 }
-                System.out.print("\n");
+                //System.out.print("\n");
             }
 
             bitOutputStream.close();
@@ -99,6 +102,8 @@ public class Encode
         {
             e.printStackTrace();
         }
+        
+        //System.out.println(IntStream.of(frequency).sum());
     }
 
     public static void huffTraverse(Tree t, String s)

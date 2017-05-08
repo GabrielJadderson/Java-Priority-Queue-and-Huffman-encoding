@@ -33,6 +33,7 @@ public class Decode extends Encode
             }
 
             int sum = IntStream.of(frequency).sum();
+            //System.out.println(sum);
 
             Tree huffTree = Huffman();
 
