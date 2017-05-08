@@ -1,6 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 
 /**
  * Created by Gabriel Jadderson on 17/04/2017.
@@ -8,7 +6,7 @@ import java.io.FileInputStream;
 public class Encode
 {
     static int[] frequency;
-    static int counter;
+    //static int counter;
     static String[] codes;
     static PQHeap pqHeap;
     static final String left = "0";
@@ -16,7 +14,7 @@ public class Encode
 
     public Encode()
     {
-        counter = 0;
+        //counter = 0;
         frequency = new int[256];
         codes = new String[256];
         pqHeap = new PQHeap(256);
@@ -28,12 +26,13 @@ public class Encode
 
         new Encode();
 
-        try (FileInputStream fileInputStream = new FileInputStream(new File("test.txt")); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
+
+        try (FileInputStream fileInputStream = new FileInputStream(new File("in.txt")); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
         {
             int x = bufferedInputStream.read();
             while (x != -1 && x < 255)
             {
-                System.out.println(x);
+                //System.out.println(x);
                 frequency[x]++;
 
                 x = bufferedInputStream.read();
@@ -45,11 +44,8 @@ public class Encode
 
         for (int i = 0; i < frequency.length; i++)
         {
-            if(frequency[i] > 0)
-            {
-                pqHeap.insert(new Element(frequency[i], i));
-                counter++;
-            }
+                pqHeap.insert(new Element(frequency[i], new Tree(null, null, i)));
+                //counter++;
         }
 
 
@@ -58,39 +54,46 @@ public class Encode
         //StringBuilder stringBuilder = new StringBuilder();
 
         huffTraverse(HuffTree, "");
-        for (String s : codes)
+        for (int i = 0; i < codes.length; i++)
         {
-            if(!(s == null))
+            String s = codes[i];
+            if (!(s == null))
             {
-                System.out.println(s);
+                System.out.println("_Code for " + i + ": " + s);
             }
         }
 
 
+        //NOW SAVE SHIT :D
+        try
+        {
+            BitOutputStream bitOutputStream = new BitOutputStream(new FileOutputStream(new File("COMPRESSEDOUT.txt")));
+
+            for (int i = 0; i < frequency.length; i++)
+            {
+                bitOutputStream.writeInt(frequency[i]);
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 
     }
 
-    public static void huffTraverse(Object t, String s) {
+    public static void huffTraverse(Tree t, String s)
+    {
+        if (t != null)
+        {
+            if (t.character != -1)
+            {
+                codes[t.character] = s;
+                System.out.println("Code for " + t.character + " is: " + s + "  .");
+            }
 
-
-        if(!(t instanceof Tree)) {
-            Element e = (Element)t;
-            //if(e.key > 0)
-            //{
-                codes[(int) e.data] = Integer.toString((int) e.data) + ": " + s;
-            //} else {
-            //    codes[(int)e.data] = "";
-            //}
-
-            return;
+            huffTraverse(t.left, s + left);
+            huffTraverse(t.right, s + right);
         }
-
-        Tree T = (Tree)t;
-
-        huffTraverse(T.data, s + left);
-        huffTraverse(T.right, s+right);
-
-
     }
 
     /*public static void huffTraverse(Object t, String s)
@@ -125,40 +128,42 @@ public class Encode
     }   */
 
 
-    public static class Tree extends Element
+    public static class Tree
     {
-        //Object left; //See Element.data
-        Object right;
+        Tree right;
+        Tree left;
+        int character;
 
-
-        public Tree(int freq, Object left, Object right)
+        public Tree(Tree left, Tree right, int character)
         {
-            super(freq, left);
+            this.left = left;
             this.right = right;
+            this.character = character;
         }
     }
 
     public static Tree Huffman()
     {
-        //int n = frequency.length;
-        int n = counter;
+        int n = frequency.length;
 
         for (int i = 1; i < n; i++)
         {
             Element left = pqHeap.extractMin();
             Element right = pqHeap.extractMin();
 
-            Tree t = new Tree(left.key + right.key, left, right);
+            //Tree t = new Tree(left.key + right.key, left, right);
             //System.out.println(left.key + right.key);
 
             //System.out.println((int)left.data + " has been paired with " + (int)right.data);
 
-            pqHeap.insert(t);
-        }
-             
-        return (Tree) pqHeap.extractMin();
-    }
+            //pqHeap.insert(t);
 
+            pqHeap.insert(new Element(left.key + right.key, new Tree((Tree) left.data, (Tree) right.data, -1)));
+
+        }
+
+        return (Tree) pqHeap.extractMin().data;
+    }
 
 
 }

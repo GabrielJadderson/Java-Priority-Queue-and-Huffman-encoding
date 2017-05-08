@@ -89,15 +89,24 @@ class TestProjectPartII
     {
         Dict d = new DictBinTree();
 
+        /*
         d.insert(42);
         d.insert(6);
         d.insert(7);
         d.insert(13);
         d.insert(9);
+*/
+        d.insert(10);
+        d.insert(11);
+        d.insert(12);
+        d.insert(13);
+        d.insert(14);
+        d.insert(15);
 
         int[] a = d.orderedTraversal();
         System.out.println("-----");
-        for(int i = 0; i < a.length; i++) {
+        for (int i = 0; i < a.length; i++)
+        {
             System.out.println(a[i]);
         }
     }

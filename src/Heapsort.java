@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 /**
  * Created by gabriel on 01/03/2017.
  */
@@ -8,6 +6,7 @@ public class Heapsort
     public static void main(String[] args)
     {
 
+        /*
         PQ pq = new PQHeap(1000);
 
         int n = 0;
@@ -30,7 +29,27 @@ public class Heapsort
 
         //test_1();
         //test_2();
-        //test_3();
+        test_3();
+        */
+        test_4();
+    }
+
+    private static void test_4()
+    {
+        PQ pq = new PQHeap(1000); //4 ms to create this.
+
+        long startTime = System.nanoTime();
+        for (int i = 0; i < 1000; i++)
+        {
+            pq.insert(new Element((int)Math.random(), null));
+        }
+
+        long endTime = System.nanoTime();
+
+
+
+
+        System.out.println((endTime - startTime)/1e06 + " ms");
     }
 
     /*public static void test_1()
@@ -83,13 +102,16 @@ public class Heapsort
         pq.insert(new Element(42, null));
         pq.insert(new Element(55, null));
         pq.insert(new Element(3, null));
-        pq.insert(new Element(1111, null));
+        pq.insert(new Element(1011, null));
         pq.insert(new Element(25, null));
         pq.insert(new Element(100, null));
-        pq.insert(new Element(1111, null));
+        pq.insert(new Element(200, null));
+        pq.insert(new Element(321, null));
+        pq.insert(new Element(503, null));
+        pq.insert(new Element(1711, null));
         pq.insert(new Element(101, null));
         pq.insert(new Element(171, null));
-        pq.insert(new Element(1111, null));
+        pq.insert(new Element(811, null));
 
         for (Element p : pq.data)
         {
