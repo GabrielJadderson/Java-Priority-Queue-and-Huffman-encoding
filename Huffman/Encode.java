@@ -3,25 +3,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbccccccccccccddddddddddddddddeeeeeeeeefffff
-
 /**
+ *
  * Created by Gabriel Jadderson on 17/04/2017.
  */
 public class Encode
 {
     static int[] frequency;
-    //static int counter;
     static String[] codes;
     static PQHeap pqHeap;
     static final String left = "0";
     static final String right = "1";
-    static String inputFile = "";
-    static String outputFile = "";
 
     public Encode()
     {
-        //counter = 0;
         frequency = new int[256];
         codes = new String[256];
         pqHeap = new PQHeap(256);
@@ -30,14 +25,9 @@ public class Encode
 
     public static void main(String[] args)
     {
-        inputFile = args[0];
-        outputFile = args[1];
-
-
         new Encode();
 
-
-        try (FileInputStream fileInputStream = new FileInputStream(new File(inputFile)); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
+        try (FileInputStream fileInputStream = new FileInputStream(new File(args[0])); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream))
         {
             int x = bufferedInputStream.read();
             while (x != -1 && x < 255)
@@ -77,8 +67,8 @@ public class Encode
         //NOW SAVE SHIT :D
         try
         {
-            BitOutputStream bitOutputStream = new BitOutputStream(new FileOutputStream(new File(outputFile)));
-            FileInputStream fileInputStream = new FileInputStream(new File(inputFile));
+            BitOutputStream bitOutputStream = new BitOutputStream(new FileOutputStream(new File(args[1])));
+            FileInputStream fileInputStream = new FileInputStream(new File(args[0]));
             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 
             for (int i = 0; i < frequency.length; i++)

@@ -15,7 +15,7 @@ public class Tree
 
     public int getCharacter(BitInputStream bitInputStream)
     {
-        if(left == null && right == null) {
+        if(left == null && right == null) { //leaf node
             return character;
         }
 
@@ -35,24 +35,4 @@ public class Tree
         }
         return character;
     }
-
-    /*public int getCharacter(BitInputStream bitInputStream)
-    {
-        try
-        {
-            int bit = bitInputStream.readBit();
-            if (bit == 0 && left != null)
-            {
-                return left.getCharacter(bitInputStream);
-            } else if (bit == 1 && right != null)
-            {
-                return right.getCharacter(bitInputStream);
-            }
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return character;
-    }*/
-
 }
